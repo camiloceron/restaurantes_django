@@ -1,0 +1,48 @@
+{% extends "restaurante/base.html" %}
+{% load bootstrap %}
+
+{% block contenido %}
+<br>
+<div class="container">
+
+    <div class="row">       
+
+        <div class="col-md-9">
+
+            <div class="row">
+            {% for p in platos %}
+
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="/media/{{p.imagen}}" >
+                        <div class="caption">
+                            <h4 class="pull-right">${{p.valor}}</h4>
+                            <p align="left"><strong><a href="/platos/edit/{{p.id}}">{{p.nombre}}</a></strong>
+                            </p>
+                            <p>{{p.descripcion}}</p>
+                        </div>
+                        <div class="ratings">
+                            <p class="pull-right">12 reviews</p>
+                            <p>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}                                
+
+            </div><!-- fin row -->
+
+        </div>
+
+    </div>
+
+</div>
+
+   
+
+{% endblock contenido %}

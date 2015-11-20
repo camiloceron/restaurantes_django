@@ -1,0 +1,109 @@
+{% extends "restaurante/base.html" %}
+
+{% block contenido %}
+{% if messages %}
+<br>
+<div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  {% for message in messages %}
+    <strong>Bien Hecho!! </strong>{{ message }}
+    {% endfor %}  
+</div>
+{% endif %}
+
+
+
+<h3>Clientes
+	<small>administrar sus clientes</small>
+</h3>
+<div class="row">
+  <div class="col-lg-12">
+    <a
+      class="btn btn-primary"
+      href="/clientes/add/">
+      <i class="fa fa-plus"></i>&nbsp;Nuevo Cliente</a>
+    <br><br>
+
+    <table class="table table-striped">
+	    <thead>
+	      <tr>
+	        <th>NOMBRE</th>
+	        <th>TELEFONO</th>
+	        <th>EMAIL</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    {% for c in clientes %}
+	    	<tr>
+	    		<td>{{c.nombre}}</td>
+		        <td>{{c.telefono}}</td>
+		        <td>{{c.email}}</td>
+		        <td>
+					<a
+					  class="btn btn-sm btn-success"
+					  href="/clientes/edit/{{c.id}}">
+					  <i class="fa fa-pencil"></i>
+					</a>
+					<a
+					  class="btn btn-sm btn-danger"
+					  data-toggle="modal" data-target="#deleteModal"
+					  data-whatever="{{c.id}}"
+					  data-whatever2="{{c.nombre}}">
+					  <i class="fa fa-trash-o"></i>
+					</a>            		
+				</td>
+	    	</tr>			
+		{% endfor %}
+	    </tbody>
+	</table>
+    
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteModalLabel">Eliminar Cliente</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center" class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> 
+        	¿Esta seguro que desea eliminar el cliente?
+          	<h4 align="center"></h4>
+        </div>        
+        
+      </div>
+      <div class="modal-footer">         
+        <a          
+		  class="btn btn-sm btn-danger"
+		  href="">
+		  <span class="glyphicon glyphicon-ok-sign"></span>
+		  Si
+		</a>
+		<a		  
+		  class="btn btn-sm btn-default"
+		  data-dismiss="modal">
+		  <span class="glyphicon glyphicon-remove"></span>
+		  No
+		</a>		
+      </div>
+    </div>
+  </div>
+</div> 
+
+<script>
+    $('#deleteModal').on('show.bs.modal', function (event) {
+	  var button    = $(event.relatedTarget) // Button that triggered the modal
+	  var idCliente = button.data('whatever') // Extract info from data-* attributes
+	  var nombre    = button.data('whatever2')	  
+	  var modal     = $(this)
+	  var url       = '/clientes/delete/'+idCliente;
+	  
+	  modal.find('.modal-body h4').text(nombre)  	  
+	  modal.find('.modal-footer a').attr({'href': url})	  
+	})
+</script>
+
+{% endblock contenido %}

@@ -1,0 +1,34 @@
+{% extends "restaurante/base.html" %}
+{% load bootstrap %}
+
+{% block contenido %}
+<h3>Nuevo Cliente
+	<small>Agregar un nuevo cliente</small>
+</h3>
+<form role="form" method="post">{% csrf_token %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Nuevo Cliente</div>
+    </div>
+    <div class="panel-body">
+      
+      {{formulario | bootstrap}}
+
+    </div>
+    <div class="panel-footer">
+      <div class="clearfix">
+        <div class="pull-right">
+          <input type="submit" value="Guardar" class="btn btn-primary">
+          <a href="/clientes" class="btn">Volver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+   
+
+{% endblock contenido %}
+
+
+
+
